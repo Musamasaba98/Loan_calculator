@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import LoanForm from "./components/LoanForm";
+import LoanCalculator from "./components/LoanCalculator";
+// import Result from "./components/Result";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [monthlyPayment, setMonthlyPayment] = useState(null);
+  const [totalInterest, setTotalInterest] = useState(null);
 
+  const handleCalculate = (loanAmount, annualInterestRate, loanTerm) => {
+    // Convert annual interest rate to monthly rate (decimal)
+    const monthlyInterestRate = annualInterestRate / 100 / 12;
+
+    // Calculate the number of monthly payments
+    const numberOfMonthlyPayments = loanTerm * 12;
+
+    // Calculate the monthly payment amount
+    const monthlyPaymentAmount =
+      (loanAmount * monthlyInterestRate) /
+      (1 - Math.pow(1 + monthlyInterestRate, -numberOfMonthlyPayments));
+
+    // Calculate the total interest paid
+    const totalInterestPaid =
+      monthlyPaymentAmount * numberOfMonthlyPayments - loanAmount;
+
+    setMonthlyPayment(monthlyPaymentAmount); // Replace with actual calculation
+    setTotalInterest(totalInterestPaid); // Replace with actual calculation
+  };
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <LoanForm onCalculate={handleCalculate} />
+        {monthlyPayment !== null && totalInterest !== null && (
+          <LoanCalculator
+            monthlyPayment={monthlyPayment}
+            totalInterest={totalInterest}
+          />
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
