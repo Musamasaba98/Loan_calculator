@@ -1,15 +1,22 @@
 const Result = ({ monthlyPayment, totalInterest }) => {
   return (
-    <div className="container mx-auto p-4">
-      <div className="text-2xl font-semibold mb-4">
-        Loan Calculation Results
-      </div>
-      <div className="mb-2">
-        <strong>Monthly Payment:</strong> {monthlyPayment.toLocaleString()} UGX
-      </div>
-      <div>
-        <strong>Total Interest Paid:</strong> {totalInterest.toLocaleString()}{" "}
-        UGX
+    <div className="container mx-auto h-auto">
+      <div className=" bg-white rounded-lg shadow-md">
+        <div className="px-2 py-4 text-white  bg-blue-400">
+          <h3 className="text-lg font-semibold">Your EMI Details</h3>
+        </div>
+        <div className="p-2">
+          <p className="text-gray-600">Loan EMI</p>
+          <h5 className="text-xl font-semibold">
+            {monthlyPayment.toLocaleString()} UGX
+          </h5>
+        </div>
+        <div className="p-2">
+          <p className="text-gray-600">Total Interest Payable</p>
+          <h5 className="text-xl font-semibold">
+            {totalInterest.toLocaleString()} UGX
+          </h5>
+        </div>
       </div>
     </div>
   );

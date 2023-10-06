@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Result from "./Result";
 import LoanForm from "./LoanForm";
+import Chart from "./Chart";
 
 const LoanCalculator = () => {
   const [monthlyPayment, setMonthlyPayment] = useState(null);
@@ -28,12 +29,20 @@ const LoanCalculator = () => {
   return (
     <>
       <LoanForm onCalculate={handleCalculate} />
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-6">
         {monthlyPayment !== null && totalInterest !== null && (
-          <Result
-            monthlyPayment={monthlyPayment}
-            totalInterest={totalInterest}
-          />
+          <div className="container mx-auto grid lg:grid-cols-2 gap-4 sm:grid-cols-1">
+            <Result
+              monthlyPayment={monthlyPayment}
+              totalInterest={totalInterest}
+            />
+            <div className=" bg-white rounded-lg shadow-md flex justify-center">
+              <Chart
+                monthlyPayment={monthlyPayment}
+                totalInterest={totalInterest}
+              />
+            </div>
+          </div>
         )}
       </div>
     </>
